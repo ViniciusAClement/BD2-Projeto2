@@ -24,9 +24,9 @@ public class EnderecoUbs {
 	@Column (name = "ibge")
 	private int ibge;
 	@Column (name = "latitude")
-	private String lat;
+	private double lat;
 	@Column (name = "longitude")
-	private String lon;
+	private double lon;
 	@OneToOne
 	@JoinColumn(name = "id_ubs")
 	private Ubs ubs;
@@ -60,16 +60,16 @@ public class EnderecoUbs {
 	public void setIbge(int ibge) {
 		this.ibge = ibge;
 	}
-	public String getLat() {
+	public double getLat() {
 		return lat;
 	}
-	public void setLat(String lat) {
+	public void setLat(double lat) {
 		this.lat = lat;
 	}
-	public String getLon() {
+	public double getLon() {
 		return lon;
 	}
-	public void setLon(String lon) {
+	public void setLon(double lon) {
 		this.lon = lon;
 	}
 	
