@@ -3,12 +3,10 @@ package main.models.dao;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
-import main.models.dao.HibernateUtil;
+import main.models.entities.EnderecoUbs;
 import main.models.entities.Ubs;
+import main.models.services.UserServices;
 
 
 public class UbsDao {
@@ -48,20 +46,37 @@ public class UbsDao {
 		return resultado;
 	}
 	
-	public static List<Ubs> ubsPorEstado(int uf){
+	public static List<EnderecoUbs> ubsPorEstado(int uf){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		String jpql = "SELECT p FROM Ubs p WHERE p.uf = :uf";
-		List<Ubs> resultado = session.createQuery(jpql, Ubs.class).setParameter("uf", uf).getResultList();
+		String jpql = "SELECT p FROM EnderecoUbs p WHERE p.uf = :uf";
+		List<EnderecoUbs> resultado = session.createQuery(jpql, EnderecoUbs.class).setParameter("uf", uf).getResultList();
 		session.close();
 		return resultado;
 	}
 	
-	public static List<Ubs> ubsPorCidade(int ibge){
+	public static List<EnderecoUbs> ubsPorCidade(int ibge){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		String jpql = "SELECT p FROM Ubs p WHERE p.ibge = :ibge";
-		List<Ubs> resultado = session.createQuery(jpql, Ubs.class).setParameter("ibge", ibge).getResultList();
+		String jpql = "SELECT p FROM EnderecoUbs p WHERE p.ibge = :ibge";
+		List<EnderecoUbs> resultado = session.createQuery(jpql, EnderecoUbs.class).setParameter("ibge", ibge).getResultList();
 		session.close();
 		return resultado;
 	}
 	
+	public static List<EnderecoUbs> ubsPorBairro(String bairro){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		int ibge = UserServices.codigoIbgeDaCidade();
+		String jpql = "SELECT p FROM EnderecoUbs p WHERE p.bairro = :bairro AND p.ibge = :ibge";
+		List<EnderecoUbs> resultado = session.createQuery(jpql, EnderecoUbs.class).setParameter("bairro", bairro).setParameter("ibge", ibge).getResultList();
+		session.close();
+		return resultado;
+	}
+	
+	public static List<String> bairrosQueTemUbs(){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		int ibge = UserServices.codigoIbgeDaCidade();
+		String jpql = "SELECT DISTINCT u.bairro FROM EnderecoUbs u WHERE u.ibge = :ibge";
+		List<String> resultado = session.createQuery(jpql, String.class).setParameter("ibge", ibge).getResultList();
+		session.close();
+		return resultado;
+	}
 }

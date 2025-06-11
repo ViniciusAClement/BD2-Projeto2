@@ -14,10 +14,11 @@
         <property name="hibernate.format_sql">false</property>
         <property name="hibernate.use_sql_comments">false</property>
         <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        
         
 
 
         <mapping class="main.models.entities.Ubs" />
+        <mapping class="main.models.entities.EnderecoUbs" />
     </session-factory>
 </hibernate-configuration>
